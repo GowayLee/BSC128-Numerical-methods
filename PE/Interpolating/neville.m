@@ -1,5 +1,5 @@
 % Input
-x = 0.0;
+x = 0.0; % x value to approximate
 X = [-0.5 -0.25 0.25 0.5]; % Known_x_data
 F = [1.93750 1.33203 0.800781 0.687500]; % Known_y_data
 N = length(X);

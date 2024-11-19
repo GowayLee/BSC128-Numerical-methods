@@ -6,6 +6,7 @@ function p = f(x)
   p = x^2 - 2*e^x;
 end
 
+% g(x) = f'(x)
 function p = g(x)
   p = 2*x - 2*e^x;
 end
