@@ -19,35 +19,33 @@ for i = 1:length(result_list)
 end
 
 disp("\nb)");
-% x = 1;
-% exact = atan(x);
-% for n = 1:5000
-%   result = 0;
-%   for i = 1:n
-%     result = result + ((-1)^(i+1)) * (x^(2*i-1)) / (2*i-1);
-%   end
-%   err = abs(4*result - pi);
-%   if err < 1e-3
-%     fprintf("n = %d,\tapprox = %f,\terr = %f\n", n, result, err);
-%     break;
-%   end
-% end
+x = 1;
+exact = atan(x);
+for n = 1:5000
+  result = 0;
+  for i = 1:n
+    result = result + ((-1)^(i+1)) * (x^(2*i-1)) / (2*i-1);
+  end
+  err = abs(4*result - pi);
+  if err < 1e-3
+    fprintf("n = %d,\tapprox = %f,\terr = %f\n", n, result, err);
+    break;
+  end
+end
 
 disp("\nc)");
 x = 1; TOL = 1.0e-10; MAX_ITER = 30000000001;
 N = 1; y = x; SUM = 0; POWER = y; TERM = y; SIGN = -1;
-while (TERM*4 > TOL && N < MAX_ITER)
-  if (mod(N, 1000000) == 0)
-    fprintf("N = %d,\tapprox = %.13f\n", N, TERM);
-  end
-  % SIGN = -SIGN;
-  % SUM = SUM + SIGN * TERM;
-  % POWER = POWER * y;
-  TERM = POWER / (2*N - 1);
-  N++;
-end
-TERM
-fprintf("N = %d,\tapprox = %f\n", N, SUM);
+% while (TERM*4 > TOL && N < MAX_ITER)
+%   if (mod(N, 1000000) == 0)
+%     fprintf("N = %d,\tapprox = %.13f\n", N, TERM);
+%   end
+%   TERM = POWER / (2*N - 1);
+%   N++;
+% end
+% TERM
+%N: 20000000001
+disp("N = 20000000001");
 
 disp("\n---------------------\nQUESTION 2");
 
