@@ -125,12 +125,14 @@ abs_err = abs(exact - Q(N, N));
 fprintf("Absolute error: %.7f\n", abs_err);
 
 disp("\nc)");
-clear Q;
 x = 1.25;
+X=[1, 1.5];
+F = [f(X(1)), f(X(2))]; % Known_F
+dF = [g(X(1)), g(X(2))]; % Known_derivative_data
 
 n = length(X);
 % Initialize 
-Q(1:2*N, 1:2*n) = 0;
+Q(1:2*n, 1:2*n) = 0;
 z(1:2*n) = 0;
 
 % Step 1
@@ -158,7 +160,7 @@ end
 % Compute result
 result = 0;
 h = 3;
-for i = 1 : 2*(h-1)
+for i = 1 : 2*n
   temp = 1;
   for j = 1 : i-1
     temp = temp * (x-z(j));
@@ -170,9 +172,42 @@ abs_err = abs(exact - result);
 fprintf("Absolute error: %.7f\n", abs_err);
 
 disp("\nd)");
+x = 1.25;
+X=[1 2 3];
+F = [f(X(1)), f(X(2)), f(X(3))]; % Known_F
+dF = [g(X(1)), g(X(2)), g(X(3))]; % Known_derivative_data
+
+n = length(X);
+% Initialize 
+Q(1:2*n, 1:2*n) = 0;
+z(1:2*n) = 0;
+
+% Step 1
+for i = 1:n
+  % Step 2
+  z(2*(i-1)+1) = X(i);
+  z(2*i) = X(i);
+  Q(2*(i-1)+1, 1) = F(i);
+  Q(2*i, 1) = F(i);
+  Q(2*i, 2) = dF(i);
+  
+  % Step 3
+  if(i ~= 1)
+    Q(2*i-1, 2) = (Q(2*i-1, 1) - Q(2*i-2, 1)) / (z(2*i-1) - z(2*i-2));
+  end
+end
+
+% Step 4
+for i = 3 : 2*n
+  for j = 3 : i
+    Q(i, j) = (Q(i, j-1) - Q(i-1, j-1)) / (z(i) - z(i-j+1));
+  end
+end
+
+% Compute result
 result = 0;
 h = 5;
-for i = 1 : 2*(h-1)
+for i = 1 : 2*n
   temp = 1;
   for j = 1 : i-1
     temp = temp * (x-z(j));
